@@ -302,8 +302,14 @@
 
   <!--text보내기 부분-->
   <script>
-    var num = 0;
-
+    var num = localStorage.getItem('counter');
+    if (num == null) {
+      num = 0;
+    }
+    var doneNum = localStorage.getItem('donecounter');
+    if (doneNum == null) {
+      doneNum = 0;
+    }
     // function date2(){
     //   var date2=document.getElementById('date2');
     //   var year=now.getYear();
@@ -319,10 +325,12 @@
       //div1
       var todoList = document.getElementById('todoList');
       $('todoList').append(todoList.innerHTML += "<p class='hov' id='"+num+"'><label  id='"+num+"'><input type='checkbox'onclick='move(this.id);' style='cursor:pointer' id='" + num + "' class='t1' name='box'><font size='2.7em'>" + date1 +"</font><strong>&nbsp&nbsp"+text1 + "</strong></label></p>")
-     
+     localStorage.setItem('#'+num,"<p class='hov' id='"+num+"'><label  id='"+num+"'><input type='checkbox'onclick='move(this.id);' style='cursor:pointer' id='" + num + "' class='t1' name='box'><font size='2.7em'>" + date1 +"</font><strong>&nbsp&nbsp"+text1 + "</strong></label></p>")
 
       $('#text1').val("");
       num++;
+      localStorage.setItem('counter',num);
+
     };
 
     function sticky() {
@@ -336,7 +344,7 @@
       var headLine = document.getElementById('headLine');
       // $('p').remove('#headDelete');
       $('label').remove('#headDelete');
-      localStorage.clear();
+      
       
 
       $('headLine').append(headLine.innerHTML += "<label id='headDelete'><strong>*&nbsp</strong><font size='2.7em'>" + date1 +"</font>&nbsp"+text1 + "<strong>&nbsp*</strong></label>")
@@ -350,6 +358,33 @@
     
     $(function(){
       var notice = localStorage.getItem('#headDelete');
+
+      for(var i=0;i<num;i++){
+        var todo = localStorage.getItem('#'+i);
+        
+        if(todo == null){
+         continue;
+        }
+      
+      var todoList = document.getElementById('todoList');
+        $('todoList').append(todoList.innerHTML +=todo);
+    
+       
+      }
+      for(var j=0;j<=doneNum;j++){
+       
+        var done = localStorage.getItem('#done'+j);
+        
+        if(done == null){
+         continue;
+        }
+     
+      var doneList = document.getElementById('doneList');
+        $('doneList').append(doneList.innerHTML +=done);
+       
+      }
+
+
       var headLine = document.getElementById('headLine');
       if(notice == null){
         notice="";
@@ -359,43 +394,28 @@
 
 
     });
-
-
-    // $(function bind(){
-          
-    //         $('#todoList').child().bind('mouseenter',function(){
-    //             $(this).css({
-    //                 'background':'black'
-                    
-    //             });
-    //         }).bind('mouseleave',function(){
-    //             $(this).css({
-    //                 'background':'none'
-                    
-    //             });
-            
-    //         });
-    // });
-        
-
-
-
-
-
+    
     function move(arguments){
       var doneList = document.getElementById('doneList');
      
-      doneList.innerHTML += '<li class="hov" id="'+arguments+'">'+$('label[id=' + arguments + ']').text()
-      + '<button style = "float: right;"class = "b1"  id="'+arguments+'" onclick="doneRemove(this.id);"><strong>X</strong></button></li>';
+      doneList.innerHTML += '<li class="hov" id=done'+doneNum+'>'+$('label[id=' + arguments + ']').text()
+      + '<button style = "float: right;"class = "b1"  id=done'+doneNum+' onclick="doneRemove(this.id);"><strong>X</strong></button></li>';
 
+        localStorage.setItem('#done'+doneNum,'<li class="hov" id=done'+doneNum+'>'+$('label[id=' + arguments + ']').text()
+      + '<button style = "float: right;"class = "b1"  id=done'+doneNum+' onclick="doneRemove(this.id);"><strong>X</strong></button></li>');
       $('p [id='+arguments+']').first().remove();
       $("input:checkbox[name=box]:checked").remove();
       document.getElementById(arguments).innerHTML = "";
+      localStorage.removeItem('#'+arguments);
+      localStorage.setItem('donecounter',doneNum);
+      doneNum++;
     }
 
     function doneRemove(arguments){
-      $('li').remove('#'+arguments);
-      $('button').remove('#'+arguments);
+      $('li[id='+arguments+']').remove();
+      // $('li').remove(arguments);
+      $('button').remove(arguments);
+      localStorage.removeItem('#'+arguments);
     }
     
   </script>
