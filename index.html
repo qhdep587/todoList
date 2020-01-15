@@ -352,9 +352,9 @@
       var notice = localStorage.getItem('#headDelete');
       var headLine = document.getElementById('headLine');
       if(notice == null){
-        $('headLine').append(headLine.innerHTML +="*공지를 등록해주세요*");
-
-      }else{$('headLine').append(headLine.innerHTML +=notice);}
+        notice="*공지를 등록해주세요*";
+      }
+      $('headLine').append(headLine.innerHTML +=notice);
       
 
 
