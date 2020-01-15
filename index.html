@@ -351,11 +351,11 @@
     $(function(){
       var notice = localStorage.getItem('#headDelete');
       var headLine = document.getElementById('headLine');
-      $('headLine').append(headLine.innerHTML +=notice);
-      if(notice = null){
-        $('headLine').append(headLine.innerHTML +="공지를 등록해주세요");
+      if(notice == null){
+        $('headLine').append(headLine.innerHTML +="*공지를 등록해주세요*");
 
-      }
+      }else{$('headLine').append(headLine.innerHTML +=notice);}
+      
 
 
     });
