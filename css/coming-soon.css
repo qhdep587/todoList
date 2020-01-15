@@ -131,7 +131,7 @@ video {
 }
 
 .social-icons {
-  position: absolute;
+  float: right;
   margin-bottom: 2rem;
   width: 100%;
   z-index: 2;
